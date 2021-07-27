@@ -51,7 +51,7 @@ The following options can be passed:
 | whitespaceMaintainWideSpace | bool | Whether to maintain CJK wide space characters even when `whitespaceNormalize` is true. |
 | whitespaceNormalize | bool | Whether to normalize all whitespace characters to the same one. |
 | whitespaceTrim | bool | Whether to trim the end of the result string. |
-| textDirection | str | Either 'ltr' (left to right) or 'rtl' (right to left). |
+| textDirection | str | Either `"ltr"` (left to right) or `"rtl"` (right to left). |
 | breakLongWords | bool | Whether to break really long words (longer than the available space) up into chunks. |
 | padToMaxWidth | bool | Whether to pad all lines to the full (visual) line width. Padding is done using the whitespace character, and is on if there is a right indent. |
 | throwOnError | bool | If any of the passed options are invalid, revert to using the defaults rather than throwing. On by default. |
