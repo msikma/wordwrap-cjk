@@ -1,0 +1,31 @@
+{
+  "name": "@msikma/stringwrap-cjk",
+  "version": "1.0.0",
+  "description": "Library for doing various forms of word wrapping (or letter wrapping) with CJK wide character support",
+  "homepage": "https://github.com/msikma/stringwrap",
+  "repository": "git+https://github.com/msikma/stringwrap",
+  "author": "Michiel Sikma <michiel@sikma.org>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "files": [
+    ".gitignore",
+    "readme.md",
+    "license.md",
+    "package.json",
+    "index.js",
+    "index.test.js",
+    "/lib"
+  ],
+  "dependencies": {
+    "is-fullwidth-code-point": "^3.0.0",
+    "string-width": "^4.2.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
