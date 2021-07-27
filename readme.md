@@ -1,3 +1,5 @@
+[![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+
 # stringwrap-cjk
 
 This is a string wrapping library with support for CJK language wrapping rules. It's intended to be used for command line utilities.
