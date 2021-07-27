@@ -9,7 +9,7 @@ CJK languages (Chinese, Japanese and Korean, plus historic Vietnamese) use wide 
 Here's an example of it in action using a mixture of Latin and Japanese text:
 
 ```js
-const { stringWrapCJK } = require('stringwrap-cjk')
+const { stringWrapCJK } = require('@msikma/stringwrap-cjk')
 
 const input = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tempor risus id nibh mollis sollicitudin. 10分だけ付き合おう。もっと時間が必要だ。いい手品師になろうと本気で思っている。村人たちは皆、行方不明になった猫を探すために山の中へでかけた。`
 const wrapped = stringWrapCJK(input, { maxWidth: 42 })
@@ -31,10 +31,10 @@ Latin text is wrapped by splitting the words by whitespace, and Japanese text is
 To install:
 
 ```
-yarn add stringwrap-cjk
+yarn add @msikma/stringwrap-cjk
 ```
 
-Find [this package on npm](https://www.npmjs.com/package/stringwrap-cjk).
+Find [this package on npm](https://www.npmjs.com/package/@msikma/stringwrap-cjk).
 
 ## Options
 
