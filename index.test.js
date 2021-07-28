@@ -51,6 +51,12 @@ const latinAndCJKWithExtraWideSpaces_Input = `Lore    m ipsum   dol    or sit a 
 const latinAndCJKWithExtraWideSpaces_Normalized_Wrapped_60 = `Lore m ipsum dol or sit a met, consectetu r adipi scing\nelit. Donec ut lorem ve l diam da pibus place rat. ７月 には\n七 夕がある 。お 願いだ から　泣　か　な　い　で。イルカ\nは人間に　　次いで最も　　　知能が高く、やがては彼らとの対話\nも 夢ではな いと 考え てい る科学者も いる。ログア ウトする\nんじ ゃなか ったよ。 Suspendisse viverra, nulla laoreet\nporta viverra, ipsum augue dapibus massa, non maximus magna\nurna maximus massa.`
 const latinAndCJKWithExtraWideSpaces_Normalized_NoWhitespaceMaintainWideSpace_Wrapped_60 = `Lore m ipsum dol or sit a met, consectetu r adipi scing\nelit. Donec ut lorem ve l diam da pibus place rat. ７月 には\n七 夕がある 。お 願いだ から 泣 か な い で。イルカ は人間に\n次いで最も 知能が高く、やがては彼らとの対話も 夢ではな いと\n考え てい る科学者も いる。ログア ウトする んじ ゃなか った\nよ。 Suspendisse viverra, nulla laoreet porta viverra, ipsum\naugue dapibus massa, non maximus magna urna maximus massa.`
 
+const latinAndCJKWithLinebreak_Input = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel diam\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次いで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。ログアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta viverra, ipsum augue dapibus massa, non maximus magna urna maximus massa.`
+const latinAndCJKWithLinebreak_NoWhitespaceMaintainLinebreaks_Wrapped_79 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel\ndiam dapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間\nに次いで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もい\nる。ログアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta\nviverra, ipsum augue dapibus massa, non maximus magna urna maximus massa.`
+const latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_79 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel\ndiam\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次\nいで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。\nログアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta\nviverra, ipsum augue dapibus massa, non maximus magna urna maximus massa.`
+const latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_80 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel diam\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次い\nで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。ログ\nアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta viverra,\nipsum augue dapibus massa, non maximus magna urna maximus massa.`
+const latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_81 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel diam\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次い\nで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。ログ\nアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta viverra,\nipsum augue dapibus massa, non maximus magna urna maximus massa.`
+
 /** Test for the line callback option. Used with 'latinAndCJK_Input'. */
 const lineCallbackTest = line => {
   if (line.indexOf('７月には七夕') > -1) {
@@ -171,6 +177,12 @@ describe(`stringWrap package`, () => {
       })
       it(`with input that is longer than the maximum width`, () => {
         expect(stringWrapCJK(latinWithExtraSpaces_Input, { maxWidth: 10000, whitespaceNormalize: true })).toBe(latinWithExtraSpaces_Normalized)
+      })
+      it(`with maintenance of linebreaks if specified`, () => {
+        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: false })).toBe(latinAndCJKWithLinebreak_NoWhitespaceMaintainLinebreaks_Wrapped_79)
+        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_79)
+        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 80, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_80)
+        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 81, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_81)
       })
     })
     describe(`it pads text to the full line width`, () => {

@@ -50,6 +50,7 @@ The following options can be passed:
 | newlineBeforeLongWords | bool | Whether to insert a newline before a long word that exceed the maximum width. |
 | newlineChar | str | The character used to create newlines. |
 | whitespaceChar | str | Character to convert all whitespace to, if `whitespaceNormalize` is true. |
+| whitespaceMaintainLinebreaks | bool | Whether to keep linebreaks intact when normalizing whitespace. |
 | whitespaceMaintainWideSpace | bool | Whether to maintain CJK wide space characters even when `whitespaceNormalize` is true. |
 | whitespaceNormalize | bool | Whether to normalize all whitespace characters to the same one. |
 | whitespaceTrim | bool | Whether to trim the end of the result string. |
