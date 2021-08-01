@@ -208,6 +208,10 @@ describe(`stringWrap package`, () => {
         expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 60, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_60)
         expect(getLongestLine(latinAndCJK_Input, { maxWidth: 60, whitespaceChar: '-', padToMaxWidth: true })).toBeLessThanOrEqual(60)
       })
+      it(`when there's only an empty string`, () => {
+        expect(stringWrapCJK('', { maxWidth: 40, whitespaceTrim: false, padToMaxWidth: true })).toBe(' '.repeat(40))
+        expect(stringWrapCJK('', { maxWidth: 40, whitespaceTrim: true, padToMaxWidth: true })).toBe('')
+      })
     })
     describe(`it returns the original string when it is shorter than the maximum width`, () => {
       it(`with only Latin alphabet text`, () => {
