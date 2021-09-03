@@ -1,4 +1,4 @@
-const { stringWrapCJK } = require('./lib')
+const { wordWrap } = require('./lib')
 
 const latin_Input = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas blandit tortor sit amet venenatis tempor. Ut sed laoreet mi. Pellentesque a mi nec justo rhoncus dictum. Mauris varius varius arcu venenatis condimentum. Duis eget massa mauris. Nunc fermentum lectus nec eleifend fringilla. Donec eget diam et felis sagittis dignissim.`
 const latin_Wrapped_40 = `Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Maecenas blandit tortor\nsit amet venenatis tempor. Ut sed\nlaoreet mi. Pellentesque a mi nec justo\nrhoncus dictum. Mauris varius varius\narcu venenatis condimentum. Duis eget\nmassa mauris. Nunc fermentum lectus nec\neleifend fringilla. Donec eget diam et\nfelis sagittis dignissim.`
@@ -71,206 +71,206 @@ const lineCallbackTest = line => {
   return line
 }
 
-/** Performs a stringWrapCJK() operation and returns the longest line of the result. */
+/** Performs a wordWrap() operation and returns the longest line of the result. */
 const getLongestLine = (input, opts = {}) => {
-  const output = stringWrapCJK(input, opts)
+  const output = wordWrap(input, opts)
   const lineLengths = output.split('\n').map(l => l.length).sort()
   return lineLengths[lineLengths.length - 1]
 }
 
 describe(`stringWrap package`, () => {
-  describe(`stringWrapCJK()`, () => {
+  describe(`wordWrap()`, () => {
     describe(`it wraps text`, () => {
       describe(`with only Latin alphabet text`, () => {
         it(`with standard filler text`, () => {
-          expect(stringWrapCJK(latin_Input, { maxWidth: 40 })).toBe(latin_Wrapped_40)
+          expect(wordWrap(latin_Input, { maxWidth: 40 })).toBe(latin_Wrapped_40)
           expect(getLongestLine(latin_Input, { maxWidth: 40 })).toBeLessThanOrEqual(40)
           expect(getLongestLine(latin_Input, { maxWidth: 80 })).toBeLessThanOrEqual(80)
           expect(getLongestLine(latin_Input, { maxWidth: 120 })).toBeLessThanOrEqual(120)
         })
         it(`with a long word that needs to be split up and starts on a separate line`, () => {
-          expect(stringWrapCJK(latinWithLongWord_Input, { maxWidth: 40 })).toBe(latinWithLongWord_Wrapped_40)
+          expect(wordWrap(latinWithLongWord_Input, { maxWidth: 40 })).toBe(latinWithLongWord_Wrapped_40)
         })
         it(`with a long word that needs to be split up and starts on the same line`, () => {
-          expect(stringWrapCJK(latinWithLongWord_Input, { maxWidth: 60 })).toBe(latinWithLongWord_Wrapped_60)
+          expect(wordWrap(latinWithLongWord_Input, { maxWidth: 60 })).toBe(latinWithLongWord_Wrapped_60)
         })
         it(`with a long word that needs to be split up and starts on a new line because 'newlineBeforeLongWords' is true`, () => {
-          expect(stringWrapCJK(latinWithLongWord_Input, { maxWidth: 60, newlineBeforeLongWords: true })).toBe(latinWithLongWord_NewlineBeforeLongWords_Wrapped_60)
+          expect(wordWrap(latinWithLongWord_Input, { maxWidth: 60, newlineBeforeLongWords: true })).toBe(latinWithLongWord_NewlineBeforeLongWords_Wrapped_60)
         })
         it(`with a long word that fits on a separate line`, () => {
-          expect(stringWrapCJK(latinWithLongWord_Input, { maxWidth: 70 })).toBe(latinWithLongWord_Wrapped_70)
+          expect(wordWrap(latinWithLongWord_Input, { maxWidth: 70 })).toBe(latinWithLongWord_Wrapped_70)
         })
         it(`with a long word that isn't being broken because 'breakLongWords' is false`, () => {
-          expect(stringWrapCJK(latinWithLongWord_Input, { maxWidth: 50, breakLongWords: false })).toBe(latinWithLongWord_NoBreakLongWords_Wrapped_50)
+          expect(wordWrap(latinWithLongWord_Input, { maxWidth: 50, breakLongWords: false })).toBe(latinWithLongWord_NoBreakLongWords_Wrapped_50)
         })
       })
       describe(`with a mixture of Latin text and CJK wide characters`, () => {
         it(`with standard filler text`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 40 })).toBe(latinAndCJK_Wrapped_40)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 40 })).toBe(latinAndCJK_Wrapped_40)
           expect(getLongestLine(latinAndCJK_Input, { maxWidth: 40 })).toBeLessThanOrEqual(40)
           expect(getLongestLine(latinAndCJK_Input, { maxWidth: 80 })).toBeLessThanOrEqual(80)
           expect(getLongestLine(latinAndCJK_Input, { maxWidth: 120 })).toBeLessThanOrEqual(120)
         })
         it(`with a long word that needs to be split up and starts on a separate line`, () => {
-          expect(stringWrapCJK(latinAndCJKWithLongWord_Input, { maxWidth: 70 })).toBe(latinAndCJKWithLongWord_Wrapped_70)
+          expect(wordWrap(latinAndCJKWithLongWord_Input, { maxWidth: 70 })).toBe(latinAndCJKWithLongWord_Wrapped_70)
         })
         it(`with a long word that needs to be split up and starts on the same line`, () => {
-          expect(stringWrapCJK(latinAndCJKWithLongWord_Input, { maxWidth: 50 })).toBe(latinAndCJKWithLongWord_Wrapped_50)
+          expect(wordWrap(latinAndCJKWithLongWord_Input, { maxWidth: 50 })).toBe(latinAndCJKWithLongWord_Wrapped_50)
         })
         it(`with a long word that needs to be split up and starts on a new line because 'newlineBeforeLongWords' is true`, () => {
-          expect(stringWrapCJK(latinAndCJKWithLongWord_Input, { maxWidth: 50, newlineBeforeLongWords: true })).toBe(latinAndCJKWithLongWord_NewlineBeforeLongWords_Wrapped_50)
+          expect(wordWrap(latinAndCJKWithLongWord_Input, { maxWidth: 50, newlineBeforeLongWords: true })).toBe(latinAndCJKWithLongWord_NewlineBeforeLongWords_Wrapped_50)
         })
         it(`with a long word that isn't being broken because 'breakLongWords' is false`, () => {
-          expect(stringWrapCJK(latinAndCJKWithLongWord_Input, { maxWidth: 50, breakLongWords: false })).toBe(latinAndCJKWithLongWord_NoBreakLongWords_Wrapped_50)
+          expect(wordWrap(latinAndCJKWithLongWord_Input, { maxWidth: 50, breakLongWords: false })).toBe(latinAndCJKWithLongWord_NoBreakLongWords_Wrapped_50)
         })
       })
     })
     describe(`it indents wrapped text`, () => {
       describe(`with only Latin alphabet text`, () => {
         it(`with a non-zero indent amount`, () => {
-          expect(stringWrapCJK(latin_Input, { maxWidth: 60, indentAmount: 5 })).toBe(latin_IndentTest1)
+          expect(wordWrap(latin_Input, { maxWidth: 60, indentAmount: 5 })).toBe(latin_IndentTest1)
         })
         it(`with a specific indent string`, () => {
-          expect(stringWrapCJK(latin_Input, { maxWidth: 60, indentAmount: 5, indentChar: '-' })).toBe(latin_IndentTest2)
+          expect(wordWrap(latin_Input, { maxWidth: 60, indentAmount: 5, indentChar: '-' })).toBe(latin_IndentTest2)
         })
         it(`with an indent string that is several characters long`, () => {
-          expect(stringWrapCJK(latin_Input, { maxWidth: 60, indentAmount: 5, indentChar: 'AB' })).toBe(latin_IndentTest3)
+          expect(wordWrap(latin_Input, { maxWidth: 60, indentAmount: 5, indentChar: 'AB' })).toBe(latin_IndentTest3)
         })
         it(`with an indent string that gets cropped`, () => {
-          expect(stringWrapCJK(latin_Input, { maxWidth: 60, indentAmount: 5, indentChar: 'AB', indentType: 'crop' })).toBe(latin_IndentTest4)
+          expect(wordWrap(latin_Input, { maxWidth: 60, indentAmount: 5, indentChar: 'AB', indentType: 'crop' })).toBe(latin_IndentTest4)
         })
         it(`with only one character space`, () => {
-          expect(stringWrapCJK(latin_Input, { maxWidth: 20, indentAmount: 19 })).toBe(latin_Wrapped_20_Indent_19)
+          expect(wordWrap(latin_Input, { maxWidth: 20, indentAmount: 19 })).toBe(latin_Wrapped_20_Indent_19)
         })
       })
       describe(`with a mixture of Latin text and CJK wide characters`, () => {
         it(`with a non-zero indent amount`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 60, indentAmount: 5 })).toBe(latinAndCJK_IndentTest1)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 60, indentAmount: 5 })).toBe(latinAndCJK_IndentTest1)
         })
         it(`with an indent string that gets cropped`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 60, indentAmount: 4, indentChar: 'あ', indentType: 'crop' })).toBe(latinAndCJK_IndentTest2)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 60, indentAmount: 4, indentChar: 'あ', indentType: 'crop' })).toBe(latinAndCJK_IndentTest2)
         })
         it(`with only one character space`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 20, indentAmount: 19 })).toBe(latinAndCJK_Wrapped_20_Indent_19)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 20, indentAmount: 19 })).toBe(latinAndCJK_Wrapped_20_Indent_19)
         })
       })
     })
     describe(`it replaces the newline character if specified`, () => {
       it(`with only Latin alphabet text`, () => {
-        expect(stringWrapCJK(latin_Input, { maxWidth: 40, newlineChar: '\r' })).toBe(latin_CarriageReturn_Wrapped_40)
+        expect(wordWrap(latin_Input, { maxWidth: 40, newlineChar: '\r' })).toBe(latin_CarriageReturn_Wrapped_40)
       })
       it(`with a mixture of Latin text and CJK wide characters`, () => {
-        expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 60, newlineChar: '\r' })).toBe(latinAndCJK_CarriageReturn_Wrapped_60)
+        expect(wordWrap(latinAndCJK_Input, { maxWidth: 60, newlineChar: '\r' })).toBe(latinAndCJK_CarriageReturn_Wrapped_60)
       })
     })
     describe(`it maintains non-breaking spaces`, () => {
       it(`with a mixture of Latin text and CJK wide characters`, () => {
-        expect(stringWrapCJK(latinAndCJKWithNBSP_Input, { maxWidth: 44 })).toBe(latinAndCJKWithNBSP_Wrapped_44)
+        expect(wordWrap(latinAndCJKWithNBSP_Input, { maxWidth: 44 })).toBe(latinAndCJKWithNBSP_Wrapped_44)
       })
     })
     describe(`it normalizes whitespace when wrapping`, () => {
       it(`with only Latin alphabet text`, () => {
-        expect(stringWrapCJK(latinWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: true })).toBe(latinWithExtraSpaces_Normalized_Wrapped_60)
+        expect(wordWrap(latinWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: true })).toBe(latinWithExtraSpaces_Normalized_Wrapped_60)
       })
       describe(`with a mixture of Latin text and CJK wide characters`, () => {
         it(`without the presence of CJK wide spaces`, () => {
-          expect(stringWrapCJK(latinAndCJKWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: true })).toBe(latinAndCJKWithExtraSpaces_Normalized_Wrapped_60)
+          expect(wordWrap(latinAndCJKWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: true })).toBe(latinAndCJKWithExtraSpaces_Normalized_Wrapped_60)
         })
         it(`with the presence of CJK wide spaces`, () => {
-          expect(stringWrapCJK(latinAndCJKWithExtraWideSpaces_Input, { maxWidth: 60, whitespaceNormalize: true, whitespaceMaintainWideSpace: true })).toBe(latinAndCJKWithExtraWideSpaces_Normalized_Wrapped_60)
+          expect(wordWrap(latinAndCJKWithExtraWideSpaces_Input, { maxWidth: 60, whitespaceNormalize: true, whitespaceMaintainWideSpace: true })).toBe(latinAndCJKWithExtraWideSpaces_Normalized_Wrapped_60)
         })
         it(`with the presence of CJK wide spaces that are not maintained`, () => {
-          expect(stringWrapCJK(latinAndCJKWithExtraWideSpaces_Input, { maxWidth: 60, whitespaceNormalize: true, whitespaceMaintainWideSpace: false })).toBe(latinAndCJKWithExtraWideSpaces_Normalized_NoWhitespaceMaintainWideSpace_Wrapped_60)
+          expect(wordWrap(latinAndCJKWithExtraWideSpaces_Input, { maxWidth: 60, whitespaceNormalize: true, whitespaceMaintainWideSpace: false })).toBe(latinAndCJKWithExtraWideSpaces_Normalized_NoWhitespaceMaintainWideSpace_Wrapped_60)
         })
       })
       it(`with input that is longer than the maximum width`, () => {
-        expect(stringWrapCJK(latinWithExtraSpaces_Input, { maxWidth: 10000, whitespaceNormalize: true })).toBe(latinWithExtraSpaces_Normalized)
+        expect(wordWrap(latinWithExtraSpaces_Input, { maxWidth: 10000, whitespaceNormalize: true })).toBe(latinWithExtraSpaces_Normalized)
       })
       it(`with maintenance of linebreaks if specified`, () => {
-        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: false })).toBe(latinAndCJKWithLinebreak_NoWhitespaceMaintainLinebreaks_Wrapped_79)
-        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_79)
-        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 80, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_80)
-        expect(stringWrapCJK(latinAndCJKWithLinebreak_Input, { maxWidth: 81, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_81)
+        expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: false })).toBe(latinAndCJKWithLinebreak_NoWhitespaceMaintainLinebreaks_Wrapped_79)
+        expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_79)
+        expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 80, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_80)
+        expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 81, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_81)
       })
     })
     describe(`it pads text to the full line width`, () => {
       it(`with only Latin alphabet text`, () => {
-        expect(stringWrapCJK(latinWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: true, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinWithExtraSpaces_Normalized_Padded_Wrapped_60)
-        expect(stringWrapCJK(latinWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: false, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinWithExtraSpaces_Padded_Wrapped_60)
+        expect(wordWrap(latinWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: true, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinWithExtraSpaces_Normalized_Padded_Wrapped_60)
+        expect(wordWrap(latinWithExtraSpaces_Input, { maxWidth: 60, whitespaceNormalize: false, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinWithExtraSpaces_Padded_Wrapped_60)
       })
       it(`with a mixture of Latin text and CJK wide characters`, () => {
-        expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 57, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_57)
+        expect(wordWrap(latinAndCJK_Input, { maxWidth: 57, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_57)
         expect(getLongestLine(latinAndCJK_Input, { maxWidth: 57, whitespaceChar: '-', padToMaxWidth: true })).toBeLessThanOrEqual(57)
-        expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 58, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_58)
+        expect(wordWrap(latinAndCJK_Input, { maxWidth: 58, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_58)
         expect(getLongestLine(latinAndCJK_Input, { maxWidth: 58, whitespaceChar: '-', padToMaxWidth: true })).toBeLessThanOrEqual(58)
-        expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 59, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_59)
+        expect(wordWrap(latinAndCJK_Input, { maxWidth: 59, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_59)
         expect(getLongestLine(latinAndCJK_Input, { maxWidth: 59, whitespaceChar: '-', padToMaxWidth: true })).toBeLessThanOrEqual(59)
-        expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 60, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_60)
+        expect(wordWrap(latinAndCJK_Input, { maxWidth: 60, whitespaceChar: '-', padToMaxWidth: true })).toBe(latinAndCJK_Padded_Wrapped_60)
         expect(getLongestLine(latinAndCJK_Input, { maxWidth: 60, whitespaceChar: '-', padToMaxWidth: true })).toBeLessThanOrEqual(60)
       })
       it(`when there's only an empty string`, () => {
-        expect(stringWrapCJK('', { maxWidth: 40, whitespaceTrim: false, padToMaxWidth: true })).toBe(' '.repeat(40))
-        expect(stringWrapCJK('', { maxWidth: 40, whitespaceTrim: true, padToMaxWidth: true })).toBe('')
+        expect(wordWrap('', { maxWidth: 40, whitespaceTrim: false, padToMaxWidth: true })).toBe(' '.repeat(40))
+        expect(wordWrap('', { maxWidth: 40, whitespaceTrim: true, padToMaxWidth: true })).toBe('')
       })
     })
     describe(`it returns the original string when it is shorter than the maximum width`, () => {
       it(`with only Latin alphabet text`, () => {
-        expect(stringWrapCJK(latin_Input, { maxWidth: 10000, whitespaceNormalize: false })).toBe(latin_Input)
+        expect(wordWrap(latin_Input, { maxWidth: 10000, whitespaceNormalize: false })).toBe(latin_Input)
       })
       it(`with a mixture of Latin text and CJK wide characters`, () => {
-        expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 10000, whitespaceNormalize: false })).toBe(latinAndCJK_Input)
+        expect(wordWrap(latinAndCJK_Input, { maxWidth: 10000, whitespaceNormalize: false })).toBe(latinAndCJK_Input)
       })
     })
     describe(`it calculates line length using either visual width or string length`, () => {
       describe(`with a mixture of Latin text and CJK wide characters`, () => {
         it(`with visual width turned on`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 50, useVisualWidth: true })).toBe(latinAndCJK_Wrapped_50)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 50, useVisualWidth: true })).toBe(latinAndCJK_Wrapped_50)
         })
         it(`with visual width turned off`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 50, useVisualWidth: false })).toBe(latinAndCJK_NoUseVisualWidth_Wrapped_50)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 50, useVisualWidth: false })).toBe(latinAndCJK_NoUseVisualWidth_Wrapped_50)
         })
       })
     })
     describe(`it makes use of the callback function if specified`, () => {
       describe(`with a mixture of Latin text and CJK wide characters`, () => {
         it(`with a callback that replaces lines and removes lines`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10, lineCallback: lineCallbackTest })).toBe(latinAndCJK_CallbackTest1)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10, lineCallback: lineCallbackTest })).toBe(latinAndCJK_CallbackTest1)
         })
         it(`with a callback that removes all lines`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10, lineCallback: () => {} })).toBe(latinAndCJK_CallbackTest2)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10, lineCallback: () => {} })).toBe(latinAndCJK_CallbackTest2)
         })
         it(`with a callback that replaces all lines`, () => {
-          expect(stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10, lineCallback: () => `a` })).toBe(latinAndCJK_CallbackTest3)
+          expect(wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10, lineCallback: () => `a` })).toBe(latinAndCJK_CallbackTest3)
         })
       })
     })
     describe(`it correctly validates the passed options`, () => {
       it(`by throwing on error if 'throwOnError' is true`, () => {
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: 0 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: -5 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: [] })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: 'a' })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: '10%' })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10 })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 50 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 40 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { maxWidth: 40, indentAmount: 39 })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { indentChar: '' })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { indentChar: '=' })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { indentChar: 2 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { whitespaceChar: null })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { whitespaceChar: 2 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { newlineChar: 2 })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { newlineChar: null })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { indentType: 'a' })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { indentType: 'repeat' })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { indentType: 'crop' })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { lineCallback: 'a' })).toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { lineCallback: () => {} })).not.toThrow()
-        expect(() => stringWrapCJK(latinAndCJK_Input, { lineCallback: () => `a` })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: 0 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: -5 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: [] })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: 'a' })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: '10%' })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 10 })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 50 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 40 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { maxWidth: 40, indentAmount: 39 })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { indentChar: '' })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { indentChar: '=' })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { indentChar: 2 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { whitespaceChar: null })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { whitespaceChar: 2 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { newlineChar: 2 })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { newlineChar: null })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { indentType: 'a' })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { indentType: 'repeat' })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { indentType: 'crop' })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { lineCallback: 'a' })).toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { lineCallback: () => {} })).not.toThrow()
+        expect(() => wordWrap(latinAndCJK_Input, { lineCallback: () => `a` })).not.toThrow()
       })
       it(`by reverting to the defaults if 'throwOnError' is false`, () => {
-        expect(stringWrapCJK(latinAndCJKWithLongWord_Input, { maxWidth: 10, indentAmount: 11, throwOnError: false })).toBe(latinAndCJK_ValidateTest1)
+        expect(wordWrap(latinAndCJKWithLongWord_Input, { maxWidth: 10, indentAmount: 11, throwOnError: false })).toBe(latinAndCJK_ValidateTest1)
         
       })
     })

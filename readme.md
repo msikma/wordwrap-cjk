@@ -1,18 +1,22 @@
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
-# stringwrap-cjk
+# wordwrap-cjk
 
-This is a string wrapping library with support for CJK language wrapping rules. It's intended to be used for command line utilities.
+This is a string wrapping library with basic support for CJK language wrapping rules. It's intended to be used for command line utilities.
 
-CJK languages (Chinese, Japanese and Korean, plus historic Vietnamese) use wide characters that get displayed as two columns wide in the terminal. Several 
+CJK languages (Chinese, Japanese and Korean, plus historic Vietnamese) present two special considerations for word wrapping in the terminal: visual character width, and the wrapping rules that differ from that of Latin text. While Latin words are split by spaces, in CJK languages words are typically wrapped per-character. Since CJK characters are visually larger, they are displayed as two columns wide in the terminal, which also needs to be taken into account.
+
+This word wrapping library automatically detects what characters are in a string and treats them accordingly. It does not support [advanced wrapping rules](https://en.wikipedia.org/wiki/Line_breaking_rules_in_East_Asian_languages) such as Kinsoku Shori.
+
+## Example
 
 Here's an example of it in action using a mixture of Latin and Japanese text:
 
 ```js
-const { stringWrapCJK } = require('@msikma/stringwrap-cjk')
+const { wordWrap } = require('wordwrap-cjk')
 
 const input = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tempor risus id nibh mollis sollicitudin. 10分だけ付き合おう。もっと時間が必要だ。いい手品師になろうと本気で思っている。村人たちは皆、行方不明になった猫を探すために山の中へでかけた。`
-const wrapped = stringWrapCJK(input, { maxWidth: 42 })
+const wrapped = wordWrap(input, { maxWidth: 42 })
 const separator = '-'.repeat(42)
 
 console.log(separator)
@@ -24,17 +28,17 @@ This prints the following to the console (with separator lines used to indicate 
 
 <p><img src="resources/example-output.png" alt="Example output" width="512"></p>
 
-Latin text is wrapped by splitting the words by whitespace, and Japanese text is split per-character.
+Latin text is wrapped by splitting the words by whitespace, and all wide characters are split per-character.
 
 ## Usage
 
 To install:
 
 ```
-yarn add @msikma/stringwrap-cjk
+yarn add wordwrap-cjk
 ```
 
-Find [this package on npm](https://www.npmjs.com/package/@msikma/stringwrap-cjk).
+Find [this package on npm](https://www.npmjs.com/package/wordwrap-cjk).
 
 ## Options
 
