@@ -16,7 +16,8 @@
     "package.json",
     "index.js",
     "index.test.js",
-    "/lib"
+    "/lib",
+    "/resources"
   ],
   "dependencies": {
     "is-fullwidth-code-point": "^3.0.0",
