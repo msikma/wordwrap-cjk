@@ -1,6 +1,6 @@
 {
   "name": "wordwrap-cjk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Library for doing various forms of word wrapping (or letter wrapping) with CJK wide character support",
   "homepage": "https://github.com/msikma/wordwrap-cjk",
   "repository": "git+https://github.com/msikma/wordwrap-cjk",
