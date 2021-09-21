@@ -48,6 +48,7 @@ The following options can be passed:
 |:-------|:-----|:------------|
 | maxWidth | int,&nbsp;str | Maximum width of the output. This can be either a number value or a percentage such as `"100%"`. If a percentage is given, the value is calculated based on the terminal size. |
 | indentAmount | int,&nbsp;arr | Amount of indentation. This is either an integer or an array of two integers; with the array, a left and right indent can be added. |
+| indentAmountFirstLine | int,&nbsp;arr | Amount of indentation for the first line; if not set, this takes the value of `indentAmount`. |
 | indentChar | str | The character used to indent the string. |
 | indentType | str | There are two types of indent: either the indent string is repeated, or the indent string is cropped to the desired width. Must be `"repeat"` or `"crop"`. |
 | lineCallback | func | Callback function that runs on each line as it's split. Performed before any line trimming is done. If the callback function returns null or undefined, the line is skipped entirely. |
