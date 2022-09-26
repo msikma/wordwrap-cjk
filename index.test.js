@@ -62,6 +62,11 @@ const latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_79 = `Lorem 
 const latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_80 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel diam\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次い\nで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。ログ\nアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta viverra,\nipsum augue dapibus massa, non maximus magna urna maximus massa.`
 const latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_81 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel diam\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次い\nで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。ログ\nアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta viverra,\nipsum augue dapibus massa, non maximus magna urna maximus massa.`
 
+const latinAndCJKWithLinebreakIntact_Input = `Lorem ipsum dolor sit amet,    consectetur adipiscing elit. In vulputate consequat neque      eu consequat. Donec vehicula ligula nec sapien dapibus, vel     iaculis eros ultricies. Ut lacinia finibus velit, id porttitor ante consequat\n\n\n\nut. Phasellus pharetra, velit at luctus faucibus, purus augue ullamcorper nisl, sit amet porta quam       lectus id augue.`
+const latinAndCJKWithLinebreakIntact_CJK = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut lorem vel diam\n\n\ndapibus placerat. ７月には七夕がある。お願いだから泣かないで。イルカは人間に次いで最も知能が高く、やがては彼らとの対話も夢ではないと考えている科学者もいる。\n\n\n\nログアウトするんじゃなかったよ。 Suspendisse viverra, nulla laoreet porta viverra, ipsum augue dapibus massa, non\n\n\n\nmaximus magna urna maximus massa.`
+const latinAndCJKWithLinebreakIntact_Wrapped_55 = `Lorem ipsum dolor sit amet,    consectetur adipiscing\nelit. In vulputate consequat neque      eu consequat.\nDonec vehicula ligula nec sapien dapibus, vel\niaculis eros ultricies. Ut lacinia finibus velit, id\nporttitor ante consequat\n\n\n\nut. Phasellus pharetra, velit\nat luctus faucibus, purus augue ullamcorper nisl, sit\namet porta quam       lectus id augue.`
+const latinAndCJKWithLinebreakIntact_CJK_Wrapped_55 = `Lorem ipsum dolor sit amet, consectetur adipiscing\nelit. Donec ut lorem vel diam\n\n\ndapibus placerat. ７月には\n七夕がある。お願いだから泣かないで。イルカは人間に次い\nで最も知能が高く、やがては彼らとの対話も夢ではないと考\nえている科学者もいる。\n\n\n\nログアウトするんじゃなかったよ。\nSuspendisse viverra, nulla laoreet porta viverra, ipsum\naugue dapibus massa, non\n\n\n\nmaximus magna urna maximus\nmassa.`
+
 /** Test for the line callback option. Used with 'latinAndCJK_Input'. */
 const lineCallbackTest = line => {
   if (line.indexOf('７月には七夕') > -1) {
@@ -199,6 +204,14 @@ describe(`stringWrap package`, () => {
         expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 79, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_79)
         expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 80, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_80)
         expect(wordWrap(latinAndCJKWithLinebreak_Input, { maxWidth: 81, whitespaceMaintainLinebreaks: true })).toBe(latinAndCJKWithLinebreak_WhitespaceMaintainLinebreaks_Wrapped_81)
+      })
+    })
+    describe(`it keeps consecutive whitespace characters intact if not normalizing whitespace`, () => {
+      it(`with only Latin alphabet text`, () => {
+        expect(wordWrap(latinAndCJKWithLinebreakIntact_Input, { maxWidth: 55, whitespaceMaintainLinebreaks: false, whitespaceNormalize: false })).toBe(latinAndCJKWithLinebreakIntact_Wrapped_55)
+      })
+      it(`with a mixture of Latin text and CJK wide characters`, () => {
+        expect(wordWrap(latinAndCJKWithLinebreakIntact_CJK, { maxWidth: 55, whitespaceMaintainLinebreaks: false, whitespaceNormalize: false })).toBe(latinAndCJKWithLinebreakIntact_CJK_Wrapped_55)
       })
     })
     describe(`it pads text to the full line width`, () => {
